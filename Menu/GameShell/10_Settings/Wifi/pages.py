@@ -14,7 +14,6 @@
 
 
 ## local UI import
-from libs.DBUS      import bus,daemon,wireless,wired
 
 from keyboard import Keyboard
 from wifi_list import WifiList

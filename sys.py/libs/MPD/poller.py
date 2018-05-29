@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*- 
 #
 
-from mpd import MPDClient, MPDError, CommandError
-import sys
 import os
+
+from mpd import MPDClient, MPDError, CommandError
 
 
 class PollerError(Exception):
@@ -11,16 +11,16 @@ class PollerError(Exception):
 
 
 class MPDPoller(object):
-    _host="/tmp/mpd/socket"
-    #_host = "localhost"
-    _port="6600"
-    _client= None
+    _host = "/tmp/mpd/socket"
+    # _host = "localhost"
+    _port = "6600"
+    _client = None
 
     def __init__(self, host, port="6600"):
         self._host = host
         self._port = port
         self._client = MPDClient(use_unicode=True)
-        self._client.timeout = 60*60*1000
+        self._client.timeout = 60 * 60 * 1000
 
     def connect(self):
         try:
@@ -35,7 +35,6 @@ class MPDPoller(object):
         except MPDError as e:
             raise PollerError("Could not connect to '%s': %s" %
                               (self._host, e))
-
 
     def disconnect(self):
         # Try to tell MPD to close the connection first
@@ -54,12 +53,12 @@ class MPDPoller(object):
         # and the client object shouldn't be trusted to be re-used.
         except (MPDError, IOError):
             self._client = MPDClient(use_unicode=True)
-            self._client.timeout = 60*60*1000
-    
-    def general(self,func,*args):
+            self._client.timeout = 60 * 60 * 1000
+
+    def general(self, func, *args):
         ret = None
         try:
-            ret = func( *args )
+            ret = func(*args)
         except CommandError:
             return False
         except (MPDError, IOError):
@@ -76,81 +75,82 @@ class MPDPoller(object):
                 ret = func(*args)
             except (MPDError, IOError) as e:
                 raise PollerError("Couldn't retrieve current song: %s" % e)
-        
+
         return ret
-    
+
     def ping(self):
         return self.general(self._client.ping)
-         
+
     def poll(self):
-        song = self.general( self._client.status )
+        song = self.general(self._client.status)
         """ 
         while playing:
         {u'songid': u'4', u'playlistlength': u'4', u'playlist': u'7', u'repeat': u'0', u'consume': u'0', u'mixrampdb': u'0.000000', u'random': u'0', u'state': u'play', u'elapsed': u'148.758', u'volume': u'100', u'single': u'0', u'time': u'149:436', u'duration': u'435.670', u'song': u'3', u'audio': u'44100:24:2', u'bitrate': u'192'}
         
         """
 
-#        print(song)
+        #        print(song)
         return song
- 
+
     def stop(self):
         self.general(self._client.stop)
-   
-    def addfile(self,url):
+
+    def addfile(self, url):
         self.general(self._client.add, url)
- 
-    def delete(self,posid):
-        self.general(self._client.delete,posid)
- 
-    def play(self,posid):
+
+    def delete(self, posid):
+        self.general(self._client.delete, posid)
+
+    def play(self, posid):
 
         song = self.poll()
 
         if "song" in song:
             if int(song["song"]) != posid:
-                self.general(self._client.play,posid)
+                self.general(self._client.play, posid)
             else:
-                if  "state" in song:
+                if "state" in song:
                     if song["state"] == "play":
                         self.general(self._client.pause)
                     elif song["state"] == "pause":
                         self.general(self._client.pause)
                     elif song["state"] == "stop":
-                        self.general(self._client.play,posid)
+                        self.general(self._client.play, posid)
         else:
-            self.general(self._client.play,posid)
-        
-        self.general(self._client.setvol,100)
-   
+            self.general(self._client.play, posid)
+
+        self.general(self._client.setvol, 100)
+
         return posid
- 
+
     def playlist(self):
-        lst  = self.general(self._client.playlistinfo)
+        lst = self.general(self._client.playlistinfo)
         return lst
         for i in lst:
             if "title" in i:
-                print( i["title"] )
-            elif "file"  in i:
-                print( os.path.basename( i["file"] ) )
-    
-    def listfiles(self,path):
-        files = self.general(self._client.lsinfo,path)
+                print(i["title"])
+            elif "file" in i:
+                print(os.path.basename(i["file"]))
+
+    def listfiles(self, path):
+        files = self.general(self._client.lsinfo, path)
         return files
         for i in sorted(files):
             if "directory" in i:
-                print( "D %s" % i["directory"] )
+                print("D %s" % i["directory"])
             elif "file" in i:
                 print(i["file"])
-        
+
     def rootfiles(self):
         files = self.general(self._client.lsinfo, "/")
         return files
         for i in sorted(files):
             if "directory" in i:
-                print( "D %s" % i["directory"] )
+                print("D %s" % i["directory"])
             elif "file" in i:
                 print(i["file"])
-    
+
+
 def main():
     from time import sleep
 
@@ -159,7 +159,7 @@ def main():
 
     while True:
         print("poll:")
-        print( poller.poll() )
+        print(poller.poll())
 
         """
         print("playlist:")
@@ -186,5 +186,3 @@ if __name__ == "__main__":
 
     except:
         sys.exit(0)
-
-

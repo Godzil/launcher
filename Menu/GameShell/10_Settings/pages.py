@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*- 
 
-from list_page import ListPage
+from . import list_page
 
-import myvars
+from . import myvars
+
 
 def InitListPage(main_screen):
+    myvars.ListPage = list_page.ListPage()
 
-    myvars.ListPage = ListPage()
-    
     myvars.ListPage._Screen = main_screen
     myvars.ListPage._Name = "Setting List"
     myvars.ListPage.Init()

@@ -7,7 +7,6 @@ from libs.roundrects import aa_round_rect
 
 
 ## local UI import
-from UI.page         import Page,PageStack,PageSelector
 from UI.label        import Label
 from UI.fonts        import fonts
 

@@ -5,21 +5,35 @@ import pygame
 import subprocess
 
 #from beeprint import pp
-from libs.roundrects import aa_round_rect
 #import gobject
 #from wicd import misc 
 ## local UI import
 from UI.constants import Width,Height,ICON_TYPES
-from UI.page   import Page,PageSelector
+from UI.page   import Page
 from UI.label  import Label
 from UI.fonts  import fonts
-from UI.util_funcs import midRect
 from UI.keys_def   import CurKeys
 from UI.scroller   import ListScroller
 from UI.icon_pool  import MyIconPool
 from UI.icon_item  import IconItem
 from UI.multilabel import MultiLabel
+# import math
+import subprocess
 
+import pygame
+# from beeprint import pp
+# import gobject
+# from wicd import misc
+## local UI import
+from UI.constants import Width, Height, ICON_TYPES
+from UI.fonts import fonts
+from UI.icon_item import IconItem
+from UI.icon_pool import MyIconPool
+from UI.keys_def import CurKeys
+from UI.label import Label
+from UI.multilabel import MultiLabel
+from UI.page import Page
+from UI.scroller import ListScroller
 
 
 class InfoPageListItem(object):
