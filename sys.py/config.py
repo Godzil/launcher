@@ -19,7 +19,6 @@ class Config:
   "main_applet": "springboard"
 }
 """
-
     def __init__(self):
         try:
             with open("config.json", "rt") as f:

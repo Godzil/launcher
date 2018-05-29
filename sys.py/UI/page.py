@@ -10,6 +10,7 @@ from .constants import ALIGN, icon_width, icon_height, Width, ICON_TYPES
 from .icon_pool import MyIconPool
 from .keys_def import CurKeys
 from .util_funcs import midRect
+from .icon_pool import MyIconPool
 
 
 class PageStack:

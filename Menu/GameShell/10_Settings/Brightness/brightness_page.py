@@ -147,7 +147,7 @@ class BrightnessPage(Page):
                 f.write(str(newbrt))
                 return True
 
-    def WhenSliderDrag(self, value): ##value 
+    def WhenSliderDrag(self, value): ##value
         self.SetBackLight(value)
 
     def KeyDown(self, event):

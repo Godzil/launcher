@@ -10,6 +10,7 @@ class Label(Widget):
                  auto_resize=True):
         super().__init__(x, y, width, height, color, bg_color, parent)
         self._Text = text
+
         self._Color = color
         self._FontObj = font_obj
         self.AutoResize = auto_resize

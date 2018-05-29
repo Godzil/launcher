@@ -309,7 +309,7 @@ class FavListPage(Page):
                     custom_config = " -c " + self._Emulator["RETRO_CONFIG"]
                         
                 cmdpath = " ".join( (self._Emulator["LAUNCHER"],self._Emulator["ROM_SO"], custom_config, escaped_path))
-                
+
                 pygame.event.post(pygame.event.Event(RUNEVT, message=cmdpath))
                 return
             else:

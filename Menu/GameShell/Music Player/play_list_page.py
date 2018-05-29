@@ -182,8 +182,7 @@ class PlayListPage(Page):
         if cur_li._PosY < 0:
             for i in range(0, len(self._MyList)):
                 self._MyList[i]._PosY += self._MyList[i]._Height
-            self._Scrolled +=1
-
+            self._Scrolled += 1
     def ScrollDown(self):
         if len(self._MyList) == 0:
             return

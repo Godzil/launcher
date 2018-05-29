@@ -60,7 +60,7 @@ class AboveAllPatch(object):
 class SoundPatch(AboveAllPatch):
     snd_segs = [[0, 20], [21, 40], [41, 50], [51, 60], [61, 70], [71, 85], [86, 90], [91, 95], [96, 100]]
     _Needle = 0
-    
+
     def Init(self):
         self.SetCanvasHWND(self._Parent._CanvasHWND)
 
@@ -73,7 +73,7 @@ class SoundPatch(AboveAllPatch):
             if  vol >= v[0] and vol <= v[1]:
                 self._Needle = i
                 break
-          
+
         self._Needle += 1
 
         if self._Needle > len(self.snd_segs) -1:
@@ -118,4 +118,5 @@ class SoundPatch(AboveAllPatch):
             # w = 10,h = 40
             vol_rect = pygame.Rect(80 + i * 20, self._Height / 2 + 20, 10, 40)
 
-            aa_round_rect(self._CanvasHWND,vol_rect, self._Parent._SkinManager.GiveColor("Front"),3,0, self._Parent._SkinManager.GiveColor("Front"))
+            aa_round_rect(self._CanvasHWND, vol_rect, self._Parent._SkinManager.GiveColor("Front"),
+                          3, 0, self._Parent._SkinManager.GiveColor("Front"))
