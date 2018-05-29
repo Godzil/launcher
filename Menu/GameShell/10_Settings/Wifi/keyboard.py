@@ -7,12 +7,15 @@ from UI.constants import Width, Height, ICON_TYPES
 from UI.fonts import fonts
 from UI.icon_item import IconItem
 from UI.icon_pool import MyIconPool
+from UI.keys_def import CurKeys
 from UI.page import Page, PageSelector
 from UI.util_funcs import midRect
 from icons import preload
 from libs import easing
 from libs.roundrects import aa_round_rect
 from text_item import TextItem
+from textarea import Textarea
+
 
 
 class KeyboardIcon(IconItem):

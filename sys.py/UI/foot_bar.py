@@ -14,6 +14,7 @@ from .util_funcs import FileExists, midRect, SkinMap
 icon_base_path = SkinMap("gameshell/footbar_icons/")
 
 
+
 class FootBarIcon(MultiIconItem):
 
     def TotalWidth(self):
