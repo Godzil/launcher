@@ -1,0 +1,15 @@
+{
+  "CurKeySet": "PC",
+  "DontLeave": false,
+  "BackLight": "/proc/driver/backlight",
+  "Battery": "/sys/class/power_supply/axp20x-battery/uevent",
+  "MPD_socket": "/tmp/mpd.socket",
+  "UPDATE_URL": "https://raw.githubusercontent.com/clockworkpi/CPI/master/launcher_ver.json",
+  "VERSION": "1.0",
+  "plugins": [
+    "backlight",
+    "battery",
+    "wifi"
+  ],
+  "main_applet": "springboard"
+}

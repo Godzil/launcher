@@ -4,7 +4,9 @@ import os
 
 import pygame
 
-from util_funcs  import SkinMap
+from .util_funcs import SkinMap
+
+
 ##pool only store surfaces
 
 class IconPool(object):

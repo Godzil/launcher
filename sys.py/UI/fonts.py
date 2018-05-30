@@ -1,19 +1,17 @@
 # -*- coding: utf-8 -*- 
 
 import pygame
-import config
 
 if not pygame.font.get_init():
     pygame.font.init()
 
-
-skinpath = "../skin/"+config.SKIN+"/truetype"
+skinpath = "../skin/" + "default" + "/truetype"
 fonts_path = {}
 
-fonts_path["varela"]   = "%s/VarelaRound-Regular.ttf" % skinpath
+fonts_path["varela"] = "%s/VarelaRound-Regular.ttf" % skinpath
 fonts_path["veramono"] = "%s/VeraMono.ttf" % skinpath
-fonts_path["noto"]     = "%s/NotoSansMono-Regular.ttf" % skinpath
-fonts_path["notocjk"]     = "%s/NotoSansCJK-Regular.ttf" % skinpath
+fonts_path["noto"] = "%s/NotoSansMono-Regular.ttf" % skinpath
+fonts_path["notocjk"] = "%s/NotoSansCJK-Regular.ttf" % skinpath
 
 fonts = {}
 fonts["varela12"] = pygame.font.Font(fonts_path["varela"], 12)

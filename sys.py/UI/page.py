@@ -74,8 +74,6 @@ class PageSelector:
             if rect.width <= 0 or rect.height <= 0:
                 return
 
-            # color = (244,197,66,50)
-            # pygame.draw.rect(canvas,color,rect,1)
             if self._IconSurf != None:
                 self._Parent._CanvasHWND.blit(self._IconSurf, rect)
 

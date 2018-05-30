@@ -13,9 +13,9 @@ icon_ext = ".sh"
 ICON_TYPES = {"Emulator": 7, "FILE": 6, "STAT": 5, "NAV": 4, "LETTER": 3, "FUNC": 2, "DIR": 1, "EXE": 0,
               "None": -1}  # FUNC is like UI widget's function,DIR contains child page,EXE just execute a binary
 
-## H=horizontal  ,V=vertical S=Single Line
+## H=horizontal, V=vertical, S=Single Line
 # SLeft start from left, single line
-# SCenter star from center ,single line
+# SCenter star from center, single line
 ALIGN = {"HLeft": 0, "HCenter": 1, "HRight": 2, "VMiddle": 3, "SLeft": 4, "VCenter": 5, "SCenter": 6}
 
 DT = pygame.time.Clock().tick(30)  # fps in ms,eg:50

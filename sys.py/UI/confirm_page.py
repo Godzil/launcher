@@ -6,7 +6,7 @@ from libs.roundrects import aa_round_rect
 # UI lib
 from .constants import Width
 from .fonts import fonts
-from .keys_def import CurKeys
+from . import keys_def
 from .label import Label
 from .page import Page, PageSelector
 
