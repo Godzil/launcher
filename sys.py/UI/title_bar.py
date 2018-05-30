@@ -4,7 +4,6 @@ from datetime import datetime
 
 import alsaaudio
 import pygame
-from config import Battery
 from libs.DBUS import is_wifi_connected_now, wifi_strength
 
 # local import

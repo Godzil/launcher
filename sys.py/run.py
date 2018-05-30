@@ -4,16 +4,13 @@
 import os
 import socket
 import sys
-from sys import exit
 
-import dbus.service
 import pygame
 
 # from wicd import misc
 import config
 import plugins
 from UI.above_all_patch import SoundPatch
-    DBusGMainLoop(set_as_default=True)
 # local UI import
 from UI.constants import Width, Height, bg_color, DT, GMEVT, RUNEVT, RUNSYS, ICON_TYPES
 from UI.foot_bar import FootBar
@@ -34,14 +31,9 @@ sound_patch = None
 
 myscriptname = os.path.basename(os.path.realpath(__file__))
 
-
 def process_event(event, main_screen):
     global sound_patch
-
-
     if event is not None:
-
-
         pygame.event.clear()
 
         if event.type == pygame.ACTIVEEVENT:
@@ -111,9 +103,6 @@ def process_event(event, main_screen):
             if key_down_cb is not None:
                 if callable(key_down_cb):
                     main_screen.KeyDown(event)
-
-def gobject_pygame_event_poll_timer(main_screen):
-
 
 # @misc.threaded
 def socket_thread(main_screen):
@@ -197,19 +186,15 @@ def main_loop():
     while True:
         for event in pygame.event.get():
             process_event(event, main_screen)
-        # title_bar.GObjectRoundRobi
 
         pygame.time.Clock().tick(30)
     # socket_thread(main_screen)
 
-#    gobject.timeout_add(DT, gobject_pygame_event_poll_timer, main_screen)
-#    gobject.timeout_add(3000, title_bar.GObjectRoundRobin)
 
 def init():
     pass
 
 
-if __name__ == '__main__':
     os.environ['SDL_VIDEO_CENTERED'] = '1'
     X_center_mouse()
 
