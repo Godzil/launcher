@@ -3,11 +3,12 @@
 import pygame
 
 from .fonts import fonts
-from .util_funcs import midRect
+from .util_funcs import midRect, SkinMap
 
 BlankPng = "gameshell/blank.png"  ## 80x80
 
 
+BlankPng = SkinMap("gameshell/blank.png")  ## 80x80
 ## use blank circle as bg, Two alpha As Icon Label
 # Upper and Lower
 class UntitledIcon(object):

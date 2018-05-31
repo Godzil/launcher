@@ -15,6 +15,7 @@ from .icon_item import IconItem
 from .keys_def import CurKeys
 from .label import Label
 from .page import Page, PageStack
+from .skin_manager import SkinManager
 from .title_bar import TitleBar
 from .untitled_icon import UntitledIcon
 from .util_funcs import midRect, FileExists, ReplaceSuffix, CmdClean, MakeExecutable, SkinMap
@@ -116,6 +117,7 @@ class MainScreen(object):
     _MsgBox = None
     _MsgBoxFont = fonts["veramono20"]
     _IconFont = fonts["varela15"]
+    _SkinManager = None
 
     def __init__(self):
         self._Pages = []
@@ -126,6 +128,9 @@ class MainScreen(object):
         self._MsgBox = MessageBox()
         self._MsgBox._Parent = self
         self._MsgBox.Init(" ", self._MsgBoxFont)
+
+        self._SkinManager = SkinManager()
+        self._SkinManager.Init()
 
     def FartherPages(self):
         self._PageMax = len(self._Pages)
@@ -343,7 +348,7 @@ class MainScreen(object):
         return False
 
     def ReadTheDirIntoPages(self, _dir, pglevel, cur_page):
-        
+
         if FileExists(_dir) == False and os.path.isdir(_dir) == False:
             return
 
@@ -361,7 +366,7 @@ class MainScreen(object):
                     iconitem = IconItem()
                     iconitem._CmdPath = ""
                     iconitem.AddLabel(i2, self._IconFont)
-                    if FileExists( SkinMap(_dir + "/" + i2 + ".png") ):
+                    if FileExists(SkinMap(_dir + "/" + i2 + ".png")):
                         iconitem._ImageName = SkinMap(_dir + "/" + i2 + ".png")
                     else:
                         untitled = UntitledIcon()
@@ -436,7 +441,7 @@ class MainScreen(object):
                     iconitem._CmdPath = _dir + "/" + i
                     MakeExecutable(iconitem._CmdPath)
                     iconitem._MyType = ICON_TYPES["EXE"]
-                    if FileExists( SkinMap( _dir + "/" + ReplaceSuffix(i2, "png"))):
+                    if FileExists(SkinMap(_dir + "/" + ReplaceSuffix(i2, "png"))):
                         iconitem._ImageName = SkinMap(_dir + "/" + ReplaceSuffix(i2, "png"))
                     else:
                         untitled = UntitledIcon()

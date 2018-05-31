@@ -174,6 +174,8 @@ def main_loop():
     main_screen.ReadTheDirIntoPages("../Menu", 0, None)
     main_screen.FartherPages()
 
+    title_bar._SkinManager = main_screen._SkinManager
+    foot_bar._SkinManager  = main_screen._SkinManager
     sound_patch = SoundPatch()
     sound_patch._Parent = main_screen
     sound_patch.Init()
