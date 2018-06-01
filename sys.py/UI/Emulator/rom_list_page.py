@@ -20,7 +20,7 @@ from ..scroller import ListScroller
 from ..util_funcs import CmdClean, FileExists
 
 
-# from pySmartDL import SmartDL
+from UI.Emulator.list_item  import ListItem
 
 class RomStack:
     _Emulator = None
