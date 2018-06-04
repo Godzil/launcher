@@ -243,7 +243,7 @@ class MusicLibListPage(Page):
 
     def KeyDown(self, event):
 
-        if event.key == CurKeys["Menu"] or event.key == CurKeys["Left"]:
+        if event.key == CurKeys["Menu"] or event.key == CurKeys["Left"] or event.key == CurKeys["A"]:
             self.ReturnToUpLevelPage()
             self._Screen.Draw()
             self._Screen.SwapAndShow()
@@ -315,6 +315,12 @@ class MusicLibListPage(Page):
                     else:
                         i._Active = False
 
+                    if i._PosY > self._Height + self._Height/2:
+                        break
+
+                    if i._PosY < 0:
+                        continue
+                    
                     i.Draw()
 
                 self._Scroller.UpdateSize(len(self._MyList) * ListItem._Height, self._PsIndex * ListItem._Height)
@@ -328,4 +334,10 @@ class MusicLibListPage(Page):
                     else:
                         i._Active = False
 
+                    if i._PosY > self._Height + self._Height/2:
+                        break
+
+                    if i._PosY < 0:
+                        continue
+                        
                     i.Draw()
