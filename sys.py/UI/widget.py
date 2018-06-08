@@ -1,14 +1,17 @@
 import pygame
 
 class Widget:
-    def __init__(self, parent=None, x=0, y=0, width=7, height=7):
+    def __init__(self, x=0, y=0, width=7, height=7,
+                 color=pygame.Color((131, 199, 219)),
+                 bg_color= pygame.Color((0, 0, 0)),
+                 parent=None):
         self._PosX = x
         self._PosY = y
         self._Width = width
         self._Height = height
 
-        self._Color = pygame.Color(131, 199, 219)
-        self._BG_Color = pygame.Color(0, 0, 0)
+        self._Color = color
+        self._BG_Color = bg_color
 
         self._Parent = parent
 
