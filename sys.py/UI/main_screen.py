@@ -399,6 +399,7 @@ class MainScreen(object):
                         obj["LAUNCHER"] = ""
                         obj["TITLE"] = "Game"
                         obj["SO_URL"] = ""
+                        obj["RETRO_CONFIG"] = "" ##
 
                         try:
                             f = open(_dir + "/" + i + "/" + emulator_flag)
