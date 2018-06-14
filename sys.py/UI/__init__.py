@@ -1,4 +1,4 @@
-__all__ = ["Widget", "label", "container", "screen", "font_manager" "util_funcs"]
+__all__ = ["Widget", "label", "image_manager", "container", "screen", "font_manager", "image", "util_funcs"]
 
 import pygame
 
@@ -6,13 +6,17 @@ from . import widget
 from . import container
 from . import label
 from . import screen
+from . import image
+
 from . import font_manager as FontManager
+from . import image_manager as ImageManager
 from . import util_funcs as utils
 
 Widget = widget.Widget
 Label = label.Label
 Container = container.Container
 Screen = screen.Screen
+Image = image.Image
 
 # Constant values
 Width = 320

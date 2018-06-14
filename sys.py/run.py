@@ -7,20 +7,20 @@ import sys
 
 import pygame
 
-# from wicd import misc
-import config
-import plugins
-
-import UI
-
 if not pygame.display.get_init():
     pygame.display.init()
 if not pygame.font.get_init():
     pygame.font.init()
 
-conf = config.Config()
-plugins = plugins.LoadPlugins(conf)
+# from wicd import misc
+import config
+import plugins
+import skin_manager as SkinManager
 
+import UI
+
+plugins = plugins.LoadPlugins(config)
+fonts = UI.FontManager
 myscriptname = os.path.basename(os.path.realpath(__file__))
 
 
@@ -93,17 +93,29 @@ def socket_thread(main_screen):
 def main_loop():
     global sound_patch
 
-    screen = UI.Screen(fps=30)
+    screen = UI.Screen(fps=30, bg_color=SkinManager.get_color("active"))
 
     cont = UI.Container(10, 10, 50, 50, bg_color=(192, 192, 192))
 
     lbl = UI.Label(0, 0, auto_resize=True)
     lbl.SetText("Hello the World")
     lbl.set_bgcolor(None)
-    lbl.set_color((0, 255, 0))
+    lbl.set_color(SkinManager.get_color("URL"))
+    lbl.set_font("varela_40")
+
+    img = UI.Image(x=30, y=30, image=UI.ImageManager.get_image("blank_icon"))
+
+    corner_ul = UI.Image(x=0, y=0, image=UI.ImageManager.get_sprite("corners_tiles", 10, 10, 1))
+    # corner_ul = UI.Image(x=0, y=0, image=UI.ImageManager.get_image("corners_tiles"))
+    #img = UI.Image(x=30, y=30, image=UI.ImageManager.get_image("blank_icon"))
+    #img = UI.Image(x=30, y=30, image=UI.ImageManager.get_image("blank_icon"))
+    #img = UI.Image(x=30, y=30, image=UI.ImageManager.get_image("blank_icon"))
 
     cont.add_child(lbl)
 
+    screen.add_child(corner_ul)
+
+    screen.add_child(img)
     screen.add_child(cont)
 
     x = 0
@@ -133,6 +145,7 @@ def init():
     if pygame.image.get_extended() == False:
         print("This pygame does not support PNG")
         sys.exit()
+
 
     main_loop()
 

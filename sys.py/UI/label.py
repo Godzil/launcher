@@ -2,34 +2,32 @@
 
 import pygame
 from .widget import Widget
-from .fonts import fonts
 from . import font_manager
 
+
 class Label(Widget):
-    def __init__(self, x, y, width=1, height=10, text="", font_obj=fonts['varela12'],
-                 color=pygame.Color(83, 83, 83), bg_color=None,
+    def __init__(self, x, y, width=1, height=1, text="", font_obj=font_manager.get_font("default"),
+                 color=(83, 83, 83), bg_color=None,
                  auto_resize=True):
-        print(font_manager.get_c())
-        super().__init__(x, y, width, height, color, bg_color)
+        super().__init__(x=x, y=y, width=width, height=height, color=color, bg_color=bg_color)
         self._Text = text
 
         self._Color = color
         self._FontObj = font_obj
-        self.AutoResize = auto_resize
+        self._AutoResize = auto_resize
 
         self._Resize()
 
     def _Resize(self):
-        if not self.AutoResize:
+        if not self._AutoResize:
             return
 
-        if self._FontObj is not None and self._Text is not "":
-            tmp = self._FontObj.render(self._Text, True, self._Color)
-            self.set_size(tmp.get_width(), tmp.get_height())
-        else:
-            self.set_size(10, 1)
-            self._Height = 10
-            self._Width = 1
+        tmp = self._FontObj.render(self._Text, True, self._Color)
+        self.set_size(tmp.get_width(), tmp.get_height())
+
+    def set_font(self, fontname):
+        self._FontObj = font_manager.get_font(fontname)
+        self._Resize()
 
     def GetText(self):
         return self._Text
@@ -44,4 +42,4 @@ class Label(Widget):
         self._FontObj.set_bold(False)
         my_text = self._FontObj.render(self._Text, True, self._Color)
 
-        self._Parent.get_canvas().blit(my_text, (self._PosX, self._PosY, self._Width, self._Height))
+        self._Parent.get_canvas().blit(my_text, self._Rect)
