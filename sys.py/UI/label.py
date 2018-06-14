@@ -3,11 +3,13 @@
 import pygame
 from .widget import Widget
 from .fonts import fonts
+from . import font_manager
 
 class Label(Widget):
     def __init__(self, x, y, width=1, height=10, text="", font_obj=fonts['varela12'],
                  color=pygame.Color(83, 83, 83), bg_color=None,
                  auto_resize=True):
+        print(font_manager.get_c())
         super().__init__(x, y, width, height, color, bg_color)
         self._Text = text
 
