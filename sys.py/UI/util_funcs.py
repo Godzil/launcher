@@ -8,7 +8,7 @@ import subprocess
 
 import config
 import pygame
-from Xlib import display
+#from Xlib import display
 
 
 def SkinMap(orig_file_or_dir):

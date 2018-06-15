@@ -17,7 +17,7 @@ import config
 import plugins
 import skin_manager as SkinManager
 
-import UI
+import GdUI as UI
 
 plugins = plugins.LoadPlugins(config)
 fonts = UI.FontManager
@@ -93,7 +93,7 @@ def socket_thread(main_screen):
 def main_loop():
     global sound_patch
 
-    screen = UI.Screen(fps=30, bg_color=SkinManager.get_color("active"))
+    screen = UI.Screen(fps=30, bg_color=SkinManager.get_color("background"))
 
     cont = UI.Container(10, 10, 50, 50, bg_color=(192, 192, 192))
 
@@ -101,22 +101,27 @@ def main_loop():
     lbl.SetText("Hello the World")
     lbl.set_bgcolor(None)
     lbl.set_color(SkinManager.get_color("URL"))
-    lbl.set_font("varela_40")
+    lbl.set_font("noto_40")
 
     img = UI.Image(x=30, y=30, image=UI.ImageManager.get_image("blank_icon"))
 
     corner_ul = UI.Image(x=0, y=0, image=UI.ImageManager.get_sprite("corners_tiles", 10, 10, 1))
-    # corner_ul = UI.Image(x=0, y=0, image=UI.ImageManager.get_image("corners_tiles"))
-    #img = UI.Image(x=30, y=30, image=UI.ImageManager.get_image("blank_icon"))
-    #img = UI.Image(x=30, y=30, image=UI.ImageManager.get_image("blank_icon"))
-    #img = UI.Image(x=30, y=30, image=UI.ImageManager.get_image("blank_icon"))
+    corner_ur = UI.Image(x=screen.get_rect().width - 10, y=0,
+                         image=UI.ImageManager.get_sprite("corners_tiles", 10, 10, 2))
+    corner_dl = UI.Image(x=0, y=screen.get_rect().height - 10,
+                         image=UI.ImageManager.get_sprite("corners_tiles", 10, 10, 3))
+    corner_dr = UI.Image(x=screen.get_rect().width - 10, y=screen.get_rect().height - 10,
+                         image=UI.ImageManager.get_sprite("corners_tiles", 10, 10, 4))
 
     cont.add_child(lbl)
 
-    screen.add_child(corner_ul)
-
     screen.add_child(img)
     screen.add_child(cont)
+
+    screen.add_child(corner_ul)
+    screen.add_child(corner_ur)
+    screen.add_child(corner_dl)
+    screen.add_child(corner_dr)
 
     x = 0
     y = 10

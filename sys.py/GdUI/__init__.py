@@ -10,7 +10,6 @@ from . import image
 
 from . import font_manager as FontManager
 from . import image_manager as ImageManager
-from . import util_funcs as utils
 
 Widget = widget.Widget
 Label = label.Label

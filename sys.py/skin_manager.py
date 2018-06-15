@@ -3,9 +3,9 @@
 import os
 import sys
 import configparser
-import pygame
+
 import config
-import UI
+import GdUI as UI
 
 __Colors = {}
 __name = "default"
@@ -27,6 +27,7 @@ def load_skin(name="default"):
     global __Colors, __name
 
     # Set some default values
+    __Colors["background"] = (32, 32, 32)
     __Colors["high"] = (51, 166, 255)
     __Colors["text"] = (83, 83, 83)
     __Colors["front"] = (131, 199, 219)

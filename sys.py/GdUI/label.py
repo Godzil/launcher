@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import pygame
 from .widget import Widget
 from . import font_manager
 

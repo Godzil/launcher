@@ -38,6 +38,9 @@ class Widget:
     def set_parent(self, parent):
         self._Parent = parent
 
+    def get_rect(self):
+        return self._Rect
+
     def Draw(self):
         if self._BG_Color is not None and self.parent is not None:
             pygame.draw.rect(self._Parent.get_canvas(), self._BG_Color, self._Rect)

@@ -5,6 +5,7 @@ if not pygame.font.get_init():
 
 __images = {}
 
+
 def add_image(name: str, imagefile: str):
     surf = pygame.image.load(imagefile)
     __images[name] = surf
@@ -25,17 +26,11 @@ def get_sprite(name: str, width: int, height: int, pos: int):
         print("WARN: ImageManager': Image '{name}' is not defined".format(name=name))
         return None
 
-    surf = pygame.Surface((width, height))
     x_count = img.get_width() // width
-    y_count = img.get_height() // height
-
     pos_x = pos % x_count
-    pos_y = pos // y_count
-    # TODO: Need to make sure the surface is fully transparent, or that we blindly copy the pixel data
-    surf.blit(img, dest=(0, 0), area=(pos_x * width, pos_y * height, width, height), special_flags=pygame.BLEND_ADD)
+    pos_y = (pos // x_count) - 1
 
-    return surf
-
+    return img.subsurface((pos_x * width, pos_y * height, width, height))
 
 
 def del_image(name: str):
