@@ -6,17 +6,11 @@ import os
 
 ## local UI import
 from UI.constants import ICON_TYPES
+from UI.page   import Page
 from UI.label  import Label
+from UI.fonts  import fonts
 from UI.icon_item import IconItem
-# from beeprint import pp
-import os
-
-import pygame
-## local UI import
-from UI.constants import ICON_TYPES
-from UI.icon_item import IconItem
-from UI.label import Label
-
+from UI.util_funcs import midRect
 
 # a item for List
 # - - - - - - - - - - - -- 

@@ -1,22 +1,28 @@
 # -*- coding: utf-8 -*- 
 import os
-
-# import gobject
 import pygame
+
+import gobject
 import validators
-## local UI import
-from UI.constants import Width, Height, ICON_TYPES
-from UI.download import Download
-from UI.fonts import fonts
-from UI.icon_item import IconItem
-from UI.icon_pool import MyIconPool
-from UI.keys_def import CurKeys
-from UI.label import Label
-from UI.page import Page
-from UI.util_funcs import midRect
-from libs.DBUS import is_wifi_connected_now
+
+
 from libs.roundrects import aa_round_rect
 
+## local UI import
+from UI.constants import Width,Height,ICON_TYPES,RUNEVT
+from UI.page   import Page,PageSelector
+from UI.label  import Label
+from UI.icon_item import IconItem
+from UI.fonts  import fonts
+from UI.util_funcs import midRect,CmdClean,FileExists
+from UI.keys_def   import CurKeys
+from UI.multi_icon_item import MultiIconItem
+from UI.icon_pool  import MyIconPool
+from UI.download   import Download
+
+from libs.DBUS     import is_wifi_connected_now
+
+import config
 
 class DownloadProcessPage(Page):
     _FootMsg = ["Nav.","","","Back",""]
