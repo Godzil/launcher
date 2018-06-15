@@ -22,7 +22,7 @@ import GdUI as UI
 plugins = plugins.LoadPlugins(config)
 fonts = UI.FontManager
 myscriptname = os.path.basename(os.path.realpath(__file__))
-
+SkinManager.load_skin("cpi_default")
 
 def process_event(event, ui_root: UI.Widget):
     if event is not None:
