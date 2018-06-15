@@ -5,7 +5,7 @@ from . import font_manager
 
 
 class Label(Widget):
-    def __init__(self, x, y, width=1, height=1, text="", font_obj=font_manager.get_font("default"),
+    def __init__(self, x=0, y=0, width=1, height=1, text="", font_obj=font_manager.get_font("default"),
                  color=(83, 83, 83), bg_color=None,
                  auto_resize=True):
         super().__init__(x=x, y=y, width=width, height=height, color=color, bg_color=bg_color)

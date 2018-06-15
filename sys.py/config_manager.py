@@ -47,6 +47,7 @@ def get(key):
     except KeyError:
         return None
 
+
 if __initialized == False:
     load_config("config.json")
     __initialized = True

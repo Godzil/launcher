@@ -42,8 +42,11 @@ class Widget:
         return self._Rect
 
     def Draw(self):
-        if self._BG_Color is not None and self.parent is not None:
+        if self._BG_Color is not None and self._Parent is not None:
             pygame.draw.rect(self._Parent.get_canvas(), self._BG_Color, self._Rect)
 
     def handle_event(self, evt):
+        pass
+
+    def reload(self):
         pass

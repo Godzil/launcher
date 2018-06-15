@@ -12,5 +12,7 @@
     "battery",
     "wifi"
   ],
+  "screen_width": 320,
+  "screen_height": 240,
   "main_applet": "springboard"
 }
