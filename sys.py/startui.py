@@ -24,6 +24,7 @@ fonts = UI.FontManager
 myscriptname = os.path.basename(os.path.realpath(__file__))
 SkinManager.load_skin("cpi_default")
 
+
 def process_event(event, ui_root: UI.Widget):
     if event is not None:
 
@@ -35,59 +36,6 @@ def process_event(event, ui_root: UI.Widget):
                 sys.exit()
         else:
             ui_root.handle_event(event)
-
-def socket_thread(main_screen):
-    socket_path = "/tmp/gameshell"
-    if os.path.exists(socket_path):
-        os.remove(socket_path)
-
-    server = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-    server.bind(socket_path)
-    while True:
-        server.listen(1)
-        conn, addr = server.accept()
-        datagram = conn.recv(1024)
-        if datagram:
-            tokens = datagram.strip().split()
-
-            if tokens[0].lower() == "esc":
-                escevent = pygame.event.Event(pygame.KEYDOWN, {'scancode': 9, 'key': 27, 'unicode': u'\x1b', 'mod': 0})
-                current_page_key_down_cb = getattr(main_screen._CurrentPage, "KeyDown", None)
-
-                if current_page_key_down_cb is not None:
-                    if callable(current_page_key_down_cb):
-                        main_screen._CurrentPage.KeyDown(escevent)
-
-            if tokens[0].lower() == "quit":
-                conn.close()
-                on_exit_cb = getattr(main_screen, "OnExitCb", None)
-                if on_exit_cb is not None:
-                    if callable(on_exit_cb):
-                        main_screen.OnExitCb(None)
-
-                exit()
-
-            if tokens[0].lower() == "poweroff":
-                escevent = pygame.event.Event(pygame.KEYDOWN, {'scancode': 9, 'key': 27, 'unicode': u'\x1b', 'mod': 0})
-                for i in range(0, 5):
-                    current_page_key_down_cb = getattr(main_screen._CurrentPage, "KeyDown", None)
-
-                    if current_page_key_down_cb is not None:
-                        if callable(current_page_key_down_cb):
-                            main_screen._CurrentPage.KeyDown(escevent)
-
-                    if main_screen._MyPageStack.Length() == 0:  ## on Top Level
-                        break
-
-                if main_screen._CurrentPage._Name == "GameShell":
-                    for i in main_screen._CurrentPage._Icons:
-                        if i._MyType == ICON_TYPES["FUNC"]:
-                            if i._Label.GetText() == "PowerOFF":
-                                api_cb = getattr(i._CmdPath, "API", None)
-
-                                if api_cb is not None:
-                                    if callable(api_cb):
-                                        i._CmdPath.API(main_screen)
 
 
 def main_loop():
@@ -115,8 +63,41 @@ def main_loop():
 
     cont.add_child(lbl)
 
+    bottom_bar = UI.FlowContainer(x=0, y=screen.get_rect().height - 20, width=screen.get_rect().width, height=20,
+                                  bg_color=(83, 83, 83))
+
+    lblA = UI.Label(0, 0, auto_resize=True)
+    lblA.SetText("A")
+    lblA.set_color(SkinManager.get_color("URL"))
+    lblA.set_font("noto_13")
+
+    lblB = UI.Label(0, 0, auto_resize=True)
+    lblB.SetText("D")
+    lblB.set_color(SkinManager.get_color("URL"))
+    lblB.set_font("noto_13")
+
+    lblC = UI.Label(0, 0, auto_resize=True)
+    lblC.SetText("C")
+    lblC.set_color((0, 255, 0))
+    lblC.set_font("noto_13")
+
+    lblD = UI.Label(0, 0, auto_resize=True)
+    lblD.SetText("C")
+    lblD.set_color((255, 0, 0))
+    lblD.set_font("noto_13")
+
+    bottom_bar.add_left_child(lblA)
+    bottom_bar.add_left_child(lblB)
+
+    bottom_bar.add_right_child(lblC)
+    bottom_bar.add_right_child(lblD)
+
+    bottom_bar.set_margin(10)
+
     screen.add_child(img)
     screen.add_child(cont)
+
+    screen.add_child(bottom_bar)
 
     screen.add_child(corner_ul)
     screen.add_child(corner_ur)
