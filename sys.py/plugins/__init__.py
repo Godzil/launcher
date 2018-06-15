@@ -1,7 +1,7 @@
 __all__ = ["plugin"]
 
 from . import plugin
-import config
+import config_manager as config
 Plugin = plugin.Plugin
 
 

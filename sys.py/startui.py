@@ -13,7 +13,7 @@ if not pygame.font.get_init():
     pygame.font.init()
 
 # from wicd import misc
-import config
+import config_manager as config
 import plugins
 import skin_manager as SkinManager
 

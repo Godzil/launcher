@@ -4,7 +4,7 @@ import os
 import sys
 import configparser
 
-import config
+import config_manager as config
 import GdUI as UI
 
 __Colors = {}
