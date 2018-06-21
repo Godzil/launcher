@@ -8,7 +8,8 @@ class Container(Widget):
     def __init__(self, x, y, width=10, height=10, bg_color=None):
         super().__init__(x=x, y=y, width=width, height=height, bg_color=bg_color)
 
-        self._Canvas = pygame.Surface((self._Width, self._Height))
+        self._Canvas = pygame.Surface((self._Width, self._Height), pygame.SRCALPHA, 32)
+        self._Canvas.convert_alpha()
 
         self._Childs = []
 
@@ -19,7 +20,8 @@ class Container(Widget):
     def set_size(self, width, height):
         super().set_size(width, height)
         # Recreate the surface
-        self._Canvas = pygame.Surface((self._Width, self._Height))
+        self._Canvas = pygame.Surface((self._Width, self._Height), pygame.SRCALPHA, 32)
+        self._Canvas.convert_alpha()
 
     def Draw(self):
         if self._BG_Color is not None:

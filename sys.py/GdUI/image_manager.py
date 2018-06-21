@@ -13,7 +13,7 @@ def add_image(name: str, imagefile: str):
 
 def get_image(name: str):
     try:
-        return __images[name]
+        return __images[name].convert_alpha()
     except KeyError:
         print("WARN: ImageManager': Image '{name}' is not defined".format(name=name))
         return None
@@ -21,7 +21,7 @@ def get_image(name: str):
 
 def get_sprite(name: str, width: int, height: int, pos: int):
     try:
-        img = __images[name]
+        img = __images[name].convert_alpha()
     except KeyError:
         print("WARN: ImageManager': Image '{name}' is not defined".format(name=name))
         return None
