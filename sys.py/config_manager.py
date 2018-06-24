@@ -49,6 +49,6 @@ def get(key):
         return None
 
 
-if __initialized == False:
+if not __initialized:
     load_config("config.json")
     __initialized = True

@@ -12,6 +12,7 @@ if not pygame.font.get_init():
     pygame.font.init()
 
 # from wicd import misc
+# noinspection PyPep8
 import config_manager as config
 import plugins
 import skin_manager as SkinManager
@@ -38,8 +39,6 @@ def process_event(event, ui_root: UI.Widget):
 
 
 def main_loop():
-    global sound_patch
-
     screen = UI.Screen(fps=30, bg_color=SkinManager.get_color("background"))
 
     cont = UI.Container(10, 10, 50, 50, bg_color=(192, 192, 192))
@@ -126,7 +125,7 @@ def init():
     os.environ['SDL_VIDEO_CENTERED'] = '1'
     os.chdir(os.path.dirname(os.path.realpath(__file__)))
 
-    if pygame.image.get_extended() == False:
+    if not pygame.image.get_extended():
         print("This pygame does not support PNG")
         sys.exit()
 

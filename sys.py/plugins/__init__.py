@@ -5,7 +5,7 @@ import config_manager as config
 Plugin = plugin.Plugin
 
 
-def LoadPlugins(config):
+def LoadPlugins():
     """Load plugins from config data"""
     p = config.get("plugins")
     print(p)

@@ -24,8 +24,8 @@ class Label(Widget):
         tmp = self._FontObj.render(self._Text, True, self._Color)
         self.set_size(tmp.get_width(), tmp.get_height())
 
-    def set_font(self, fontname):
-        self._FontObj = font_manager.get_font(fontname)
+    def set_font(self, font_name):
+        self._FontObj = font_manager.get_font(font_name)
         self._Resize()
 
     def get_text(self):
@@ -37,7 +37,7 @@ class Label(Widget):
 
     def Draw(self):
         super().Draw()
-        # Avoding same font tangling set_bold to others
+        # Avoiding same font tangling set_bold to others
         self._FontObj.set_bold(False)
         my_text = self._FontObj.render(self._Text, True, self._Color)
 

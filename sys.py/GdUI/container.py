@@ -10,6 +10,7 @@ class Container(Widget):
         super().__init__(x=x, y=y, width=width, height=height, bg_color=bg_color)
 
         self._Canvas = pygame.Surface((self._Width, self._Height), pygame.SRCALPHA, 32)
+        # noinspection PyArgumentList
         self._Canvas.convert_alpha()
 
         self._Childs = []
@@ -22,6 +23,7 @@ class Container(Widget):
         super().set_size(width, height)
         # Recreate the surface
         self._Canvas = pygame.Surface((self._Width, self._Height), pygame.SRCALPHA, 32)
+        # noinspection PyArgumentList
         self._Canvas.convert_alpha()
 
     def Draw(self):
