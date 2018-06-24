@@ -26,6 +26,8 @@ class MainScreen(UI.Container):
         self.add_child(self._FootBar)
         self.add_child(self._ScreenCorners)
 
+        self._FootBar.set_keyhint(dpad="Move", a_key="Select", b_key="Cancel", x_key="Settings", y_key="TODO")
+
         # Border are not supported for now
         # self._FootBar.set_border(self._FootBar.borderTop, (255, 0, 0))
 
