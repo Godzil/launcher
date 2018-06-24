@@ -1,7 +1,3 @@
-import pygame
-
-import config_manager as config
-import skin_manager as SkinManager
 import GdUI as UI
 
 

@@ -24,6 +24,7 @@ __DEFAULT_VALUE = """{
 __config_list = {}
 __initialized = False
 
+
 def load_config(name="config.json"):
     global __data
     try:

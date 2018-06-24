@@ -1,5 +1,6 @@
 import pygame
 
+
 class Widget:
     borderTop = 1
     borderBottom = 2

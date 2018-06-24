@@ -7,7 +7,8 @@ __font_files = {}
 __fonts = {}
 __initialized = False
 
-def add_fontfile(name: str, ttffile: str,):
+
+def add_fontfile(name: str, ttffile: str, ):
     global __font_files
     __font_files[name] = ttffile
 
@@ -40,6 +41,7 @@ def get_font(fontname: str):
         except KeyError:
             print("WARN: FontManager - Trying to load '{font}' but not TTF defined for it.".format(font=fontname))
             return __fonts["default"]
+
 
 if __initialized is False:
     # Load default font

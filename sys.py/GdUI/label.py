@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from .widget import Widget
 from . import font_manager
+from .widget import Widget
 
 
 class Label(Widget):

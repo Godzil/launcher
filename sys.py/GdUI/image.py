@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-import pygame
 from .widget import Widget
+
 
 class Image(Widget):
     def __init__(self, x=0, y=0, width=1, height=1, bg_color=None, image=None, auto_resize=True):

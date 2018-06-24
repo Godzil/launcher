@@ -1,16 +1,13 @@
 __all__ = ["Widget", "label", "image_manager", "container", "screen", "font_manager", "image", "flow_container"]
 
-import pygame
-
-from . import widget
 from . import container
+from . import flow_container
+from . import font_manager as FontManager
+from . import image
+from . import image_manager as ImageManager
 from . import label
 from . import screen
-from . import image
-from . import flow_container
-
-from . import font_manager as FontManager
-from . import image_manager as ImageManager
+from . import widget
 
 Widget = widget.Widget
 Label = label.Label

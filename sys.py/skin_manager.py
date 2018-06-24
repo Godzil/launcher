@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
+import configparser
 import os
 import sys
-import configparser
 
-import config_manager as config
 import GdUI as UI
+import config_manager as config
 
 __Colors = {}
 __name = "default"
@@ -17,6 +17,7 @@ __SKIN_IMAGE_FOLDER = "images"
 __SKIN_CFG_COLORS_TAG = "Colors"
 __SKIN_CFG_FONTS_TAG = "Fonts"
 __SKIN_CFG_IMAGES_TAG = "Images"
+
 
 def __convert_html_color(hexstr):
     h = hexstr.lstrip('#')
@@ -83,7 +84,7 @@ def load_skin(name="default"):
 
         for image in config_images:
             UI.ImageManager.add_image(image, os.path.join(skin_folder, __SKIN_IMAGE_FOLDER,
-                                                            cfg.get(__SKIN_CFG_IMAGES_TAG, image)))
+                                                          cfg.get(__SKIN_CFG_IMAGES_TAG, image)))
 
 
 def get_color(name: str):

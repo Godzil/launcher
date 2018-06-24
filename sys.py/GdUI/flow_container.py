@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 
 import pygame
-from .widget import Widget
+
 from .container import Container
+from .widget import Widget
 
 
 class FlowContainer(Container):
@@ -64,4 +65,3 @@ class FlowContainer(Container):
             c.Draw()
 
         self._Parent.get_canvas().blit(self._Canvas, self._Rect)
-

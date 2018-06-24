@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 import os
-import socket
 import sys
 
 import pygame
@@ -117,9 +116,8 @@ def main_loop():
         if x > 320:
             x = 0
         y += 1
-        while(y > 240):
+        while (y > 240):
             y = y * 2 / 240
-
 
     # socket_thread(main_screen)
 
@@ -131,7 +129,6 @@ def init():
     if pygame.image.get_extended() == False:
         print("This pygame does not support PNG")
         sys.exit()
-
 
     main_loop()
 

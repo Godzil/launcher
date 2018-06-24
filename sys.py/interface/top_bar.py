@@ -1,8 +1,5 @@
-import pygame
-
-import config_manager as config
-import skin_manager as SkinManager
 import GdUI as UI
+import skin_manager as SkinManager
 
 
 class TopBar(UI.FlowContainer):
@@ -26,4 +23,3 @@ class TopBar(UI.FlowContainer):
     def reload(self):
         # Do nothing for now, later reload info from skinmanager
         pass
-

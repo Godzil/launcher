@@ -63,7 +63,6 @@ def init():
         print("This pygame does not support PNG")
         sys.exit()
 
-
     main_loop()
 
 

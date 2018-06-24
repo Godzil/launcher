@@ -1,12 +1,8 @@
-import pygame
-
-import config_manager as config
-import skin_manager as SkinManager
 import GdUI as UI
-
-from . import top_bar
-from . import screen_corners
+import skin_manager as SkinManager
 from . import foot_bar
+from . import screen_corners
+from . import top_bar
 
 
 class MainScreen(UI.Container):
@@ -18,7 +14,7 @@ class MainScreen(UI.Container):
 
         self._ScreenCorners = screen_corners.ScreenCorners(width, height)
 
-        self._AppletContainer = UI.Container(x=0, y=25, width=width, height=height-25-20,
+        self._AppletContainer = UI.Container(x=0, y=25, width=width, height=height - 25 - 20,
                                              bg_color=SkinManager.get_color("bgcolor"))
 
         self.add_child(self._AppletContainer)
