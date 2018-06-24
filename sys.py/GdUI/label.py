@@ -28,10 +28,10 @@ class Label(Widget):
         self._FontObj = font_manager.get_font(fontname)
         self._Resize()
 
-    def GetText(self):
+    def get_text(self):
         return self._Text
 
-    def SetText(self, text):
+    def set_text(self, text):
         self._Text = text
         self._Resize()
 

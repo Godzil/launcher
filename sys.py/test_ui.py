@@ -46,7 +46,7 @@ def main_loop():
     cont = UI.Container(10, 10, 50, 50, bg_color=(192, 192, 192))
 
     lbl = UI.Label(0, 0, auto_resize=True)
-    lbl.SetText("Hello the World")
+    lbl.set_text("Hello the World")
     lbl.set_bgcolor(None)
     lbl.set_color(SkinManager.get_color("URL"))
     lbl.set_font("noto_40")
@@ -67,22 +67,22 @@ def main_loop():
                                   bg_color=(83, 83, 83))
 
     lblA = UI.Label(0, 0, auto_resize=True)
-    lblA.SetText("A")
+    lblA.set_text("A")
     lblA.set_color(SkinManager.get_color("URL"))
     lblA.set_font("noto_13")
 
     lblB = UI.Label(0, 0, auto_resize=True)
-    lblB.SetText("D")
+    lblB.set_text("D")
     lblB.set_color(SkinManager.get_color("URL"))
     lblB.set_font("noto_13")
 
     lblC = UI.Label(0, 0, auto_resize=True)
-    lblC.SetText("C")
+    lblC.set_text("C")
     lblC.set_color((0, 255, 0))
     lblC.set_font("noto_13")
 
     lblD = UI.Label(0, 0, auto_resize=True)
-    lblD.SetText("C")
+    lblD.set_text("C")
     lblD.set_color((255, 0, 0))
     lblD.set_font("noto_13")
 

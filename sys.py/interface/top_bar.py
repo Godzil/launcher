@@ -21,7 +21,7 @@ class TopBar(UI.FlowContainer):
         self.add_child(self._bottomline)
 
     def set_title(self, title):
-        self._TitleLbl.SetText(title)
+        self._TitleLbl.set_text(title)
 
     def reload(self):
         # Do nothing for now, later reload info from skinmanager
