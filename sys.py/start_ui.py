@@ -19,7 +19,7 @@ import skin_manager as SkinManager
 import GdUI as UI
 from interface import main_screen
 
-plugins = plugins.LoadPlugins(config)
+plugins = plugins.LoadPlugins()
 fonts = UI.FontManager
 myscriptname = os.path.basename(os.path.realpath(__file__))
 SkinManager.load_skin("cpi_default")
