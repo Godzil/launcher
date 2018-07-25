@@ -59,14 +59,13 @@ class TitleBar:
             self.SyncSoundVolume()
             self.UpdateWifiStrength()
             SwapAndShow()
-        else:
+#            print("TitleBar Gobjectroundrobin")
+        elif self._InLowBackLight >= 0:
             self._InLowBackLight+=1
-
             if self._InLowBackLight > 10:
                 self.CheckBatteryStat()
                 self.SyncSoundVolume()
                 self.UpdateWifiStrength()
-                SwapAndShow()
                 self._InLowBackLight = 0
         
         return True
@@ -96,8 +95,12 @@ class TitleBar:
         return ge
 
     def SyncSoundVolume(self):
-        m = alsaaudio.Mixer()
-        vol = m.getvolume()[0]
+	try:
+	        m = alsaaudio.Mixer()
+	        vol = m.getvolume()[0]	
+	except Exception,e:
+		print(str(e))
+	        vol = 0
 
         snd_segs = [ [0,10],[10,30],[30,70],[70,100] ]
 
@@ -123,7 +126,7 @@ class TitleBar:
             f = open(Battery)
         except IOError:
             self._Icons["battery"] = self._Icons["battery_unknown"]
-            print("CheckBatteryStat open failed")
+#            print("CheckBatteryStat open failed")
             return False
         else:
             with f:

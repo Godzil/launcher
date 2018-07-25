@@ -3,6 +3,7 @@
 import dbus
 import dbus.service
 import sys
+import commands
 from wicd import misc 
 ##misc.to_bool
 ##misc.misc.noneToString
@@ -63,6 +64,9 @@ passout_time_stage = 0
 
 last_brt = -1
 
+gobject_flash_led1 = -1
+gobject_flash_led1_counter = 0
+
 def gobject_loop():
     """
     here to receive dbus signal 
@@ -73,12 +77,57 @@ def gobject_loop():
         gobject_main_loop.quit()
         exit(-1)
 
+def GobjectFlashLed1(main_screen):
+    global gobject_flash_led1_counter
+    gobject_flash_led1_counter+=1
 
+    if gobject_flash_led1_counter == 2:
+        try:
+            f = open("/proc/driver/led1","w")
+        except IOError:
+            print( "open /proc/driver/led1 IOError")
+            pass
+        else:
+            with f:
+                f.seek(0)
+                f.write("1")
+                f.truncate()
+                f.close()
+    
+
+    elif gobject_flash_led1_counter == 4:
+        try:
+            f = open("/proc/driver/led1","w")
+        except IOError:
+            print( "open /proc/driver/led1 IOError")
+            pass
+        else:
+            with f:
+                f.seek(0)
+                f.write("0")
+                f.truncate()
+                f.close()
+    
+    if gobject_flash_led1_counter == 10:
+        gobject_flash_led1_counter = 0
+    
+    return True
+
+    
 def RestoreLastBackLightBrightness(main_screen):
-    global last_brt,passout_time_stage
+    global last_brt,passout_time_stage,gobject_flash_led1
+
+    passout_time_stage = 0
+    main_screen._TitleBar._InLowBackLight = -1
+    main_screen._Closed = False
+    
+    if gobject_flash_led1 != -1:
+        gobject.source_remove(gobject_flash_led1)
+        gobject_flash_led1 = -1
+
     
     if last_brt == -1:
-        return
+        return True
 
     try:
         f = open(config.BackLight,"r+")
@@ -96,15 +145,32 @@ def RestoreLastBackLightBrightness(main_screen):
                 f.truncate()
                 f.close()
                 last_brt = -1
-                main_screen._TitleBar._InLowBackLight = -1
-                passout_time_stage = 0
-            else:
-                
+            else:                
                 f.close()
-                return
+
+    try:
+        f = open("/proc/driver/led1","w")
+    except IOError:
+        print( "open /proc/driver/led1 IOError")
+        pass
+    else:
+        with f:
+            f.seek(0)
+            f.write("0")
+            f.truncate()
+            f.close()
+    
+            
+    if main_screen._CounterScreen._Counting==True:
+        main_screen._CounterScreen.StopCounter()
+        main_screen.Draw()
+        main_screen.SwapAndShow()
+        return False
+        
+    return True
 
 def InspectionTeam(main_screen):
-    global everytime_keydown,last_brt,passout_time_stage
+    global everytime_keydown,last_brt,passout_time_stage,gobject_flash_led1
     
     cur_time = time.time()
     time_1 = config.PowerLevels[config.PowerLevel][0]
@@ -124,7 +190,8 @@ def InspectionTeam(main_screen):
                 content = [x.strip() for x in content]
                 brt=int(content[0])
                 if brt > 0:
-                    last_brt = brt ## remember brt for restore
+                    if last_brt < 0:
+                        last_brt = brt ## remember brt for restore
 
                     brt = 1
                     f.seek(0)
@@ -132,7 +199,7 @@ def InspectionTeam(main_screen):
                     f.truncate()
                     f.close()
 
-                    main_screen._TitleBar._InLowBackLight = 0
+        main_screen._TitleBar._InLowBackLight = 0
 
         if time_2 != 0:
             passout_time_stage = 1 # next 
@@ -140,7 +207,7 @@ def InspectionTeam(main_screen):
     
     elif cur_time - everytime_keydown > time_2 and passout_time_stage == 1:
         print("timeout, close screen %d" % int(cur_time - everytime_keydown))
-
+        
         try:
             f = open(config.BackLight,"r+")
         except IOError:
@@ -152,21 +219,40 @@ def InspectionTeam(main_screen):
                 f.write(str(brt))
                 f.truncate()
                 f.close()
-                main_screen._TitleBar._InLowBackLight = 0
 
+        
+        main_screen._TitleBar._InLowBackLight = 0
+        main_screen._Closed = True
         if time_3 != 0:
-            passout_time_stage = 2 # next 
+            passout_time_stage = 2 # next
+
+        gobject_flash_led1 = gobject.timeout_add(200,GobjectFlashLed1,main_screen)
+        
         everytime_keydown = cur_time
         
     elif cur_time - everytime_keydown > time_3 and passout_time_stage == 2:
-        print("Power Off now")
-
-        if config.CurKeySet != "PC":
-            cmdpath = "sudo halt -p"
-            pygame.event.post( pygame.event.Event(RUNSYS, message=cmdpath))
+        print("Power Off counting down")
         
-        passout_time_stage = 0
-        everytime_keydown = cur_time
+        main_screen._CounterScreen.Draw()
+        main_screen._CounterScreen.SwapAndShow()
+        main_screen._CounterScreen.StartCounter()
+        
+        
+        try:
+            f = open(config.BackLight,"r+")
+        except IOError:
+            pass
+        else:
+            with f:
+                brt = last_brt
+                f.seek(0)
+                f.write(str(brt))
+                f.truncate()
+                f.close()
+                
+        main_screen._TitleBar._InLowBackLight = 0
+
+        passout_time_stage = 4
         
     return True
 
@@ -185,8 +271,7 @@ def event_process(event,main_screen):
             main_screen.SwapAndShow()
             pygame.event.clear(GMEVT)
             return
-        if event.type == RUNEVT:
-
+        if event.type == RUNEVT:            
             if config.DontLeave==True:
                 os.chdir(GetExePath())
                 os.system( "/bin/sh -c "+event.message)
@@ -199,7 +284,8 @@ def event_process(event,main_screen):
                 pygame.quit()
                 gobject_main_loop.quit()
                 os.chdir( GetExePath())
-                exec_app_cmd = event.message
+                exec_app_cmd = "cd "+os.path.dirname(event.message)+";"
+                exec_app_cmd += event.message
                 exec_app_cmd += "; sync & cd "+GetExePath()+"; exec python "+myscriptname
                 print(exec_app_cmd)
                 os.execlp("/bin/sh","/bin/sh","-c", exec_app_cmd)
@@ -216,7 +302,8 @@ def event_process(event,main_screen):
                 pygame.quit()
                 gobject_main_loop.quit()
                 os.chdir( GetExePath())
-                exec_app_cmd = event.message
+                exec_app_cmd = "cd "+os.path.dirname(event.message)+";" 
+                exec_app_cmd += event.message
                 exec_app_cmd += "; sync & cd "+GetExePath()+"; exec python "+myscriptname
                 print(exec_app_cmd)
                 os.execlp("/bin/sh","/bin/sh","-c", exec_app_cmd)
@@ -226,7 +313,6 @@ def event_process(event,main_screen):
 
         if event.type == POWEROPT:
             everytime_keydown = time.time()
-            RestoreLastBackLightBrightness(main_screen)
             
             return
         if event.type == pygame.KEYUP:
@@ -235,7 +321,8 @@ def event_process(event,main_screen):
             return
         if event.type == pygame.KEYDOWN:
             everytime_keydown = time.time()
-            RestoreLastBackLightBrightness(main_screen)
+            if RestoreLastBackLightBrightness(main_screen) == False:
+                return
             ###########################################################
             if event.key == pygame.K_q:
                 on_exit_cb = getattr(main_screen,"OnExitCb",None)
@@ -273,6 +360,7 @@ def event_process(event,main_screen):
             ###########################################################
             if event.key == pygame.K_ESCAPE:
                 pygame.event.clear()
+
             
             key_down_cb = getattr(main_screen,"KeyDown",None)
             if key_down_cb != None:
@@ -368,6 +456,7 @@ def big_loop():
     main_screen.ReadTheDirIntoPages("../Menu",0,None)
     main_screen.FartherPages()
 
+    
     title_bar._SkinManager = main_screen._SkinManager
     foot_bar._SkinManager  = main_screen._SkinManager
     
@@ -385,7 +474,7 @@ def big_loop():
     gobject.timeout_add(3000,title_bar.GObjectRoundRobin)
 
 
-    socket_thread(main_screen)
+#    socket_thread(main_screen)
     
     gobject_loop()
     
@@ -402,7 +491,7 @@ if __name__ == '__main__':
     screen = pygame.display.set_mode(SCREEN_SIZE, 0, 32)
 
     pygame.event.set_allowed(None) 
-    pygame.event.set_allowed([pygame.KEYDOWN,pygame.KEYUP,GMEVT,RUNEVT,RUNSYS])
+    pygame.event.set_allowed([pygame.KEYDOWN,pygame.KEYUP,GMEVT,RUNEVT,RUNSYS,POWEROPT])
     
     pygame.key.set_repeat(DT+DT*6+DT/2, DT+DT*3+DT/2)
 
